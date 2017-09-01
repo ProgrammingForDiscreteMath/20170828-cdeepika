@@ -35,6 +35,33 @@ class ComplexNumber:
         Return the sum of ``self`` and ``other``.
         """
         return ComplexNumber(self.real + other.real, self.imaginary + other.imaginary)
+    
+#Question No.- 1    
+    def product(self,other):
+        """
+        Returns the product of two complex numbers ``self`` and ``other``.
+        
+        General formula for product of two complex numbers is given here:
+        https://www2.clarku.edu/~djoyce/complex/mult.html
+        """
+        x = self.real
+        y = self.imaginary
+        u = other.real
+        v = other.imaginary
+        
+        w = x*u - y*v
+        z = x*v + y*u
+        return ComplexNumber(w,z)
+##TEST : from the same URL:https://www2.clarku.edu/~djoyce/complex/mult.html
+
+#a = ComplexNumber(3, 2) 
+#b = ComplexNumber(1,4)
+#x = a.product(b) = -5 + 14 
+
+#Question No.-2    
+    def complex_conjugate(self):
+        """Replace the number with it's complex conjugate"""
+        return ComplexNumber(self.real,(-1)*self.imaginary)
 
 class NonZeroComplexNumber(ComplexNumber):
     def __init__(self, real_part, imaginary_part):
@@ -50,3 +77,30 @@ class NonZeroComplexNumber(ComplexNumber):
         """
         den = self.real**2 + self.imaginary**2
         return NonZeroComplexNumber(self.real/den, -self.imaginary/den)
+#Question No.- 3
+    def polar_coordinates(self):
+        """
+        return polar coordinate from given cartesian coordinates ``a``, ``b``.
+        """
+        a = self.real
+        b = self.imaginary
+        r = sqrt(a**2 + b**2)
+        try:
+            theta = atan(a/b)
+        except ZeroDivisionError:
+            if b!=0:
+                theta = pi/2
+            else:
+                raise OriginError("origin does not have well defined polar coordinates")
+        return (r, theta)
+    def logarithm(self):
+        """
+        Returns logarithm of the non zero complex number.
+        
+        For given complex number ``z `` in a polar form ``(``r, theta ``)``, log z = ln``(``r``)`` + i theta.
+        """
+        z = self.polar_coordinates()
+        ln = log(z[0])
+        t = z[1]
+        
+        return NonZeroComplexNumber(ln,t)
