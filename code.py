@@ -61,8 +61,10 @@ class ComplexNumber:
 #Question No.-2    
     def complex_conjugate(self):
         """Replace the number with it's complex conjugate"""
-        return ComplexNumber(self.real,(-1)*self.imaginary)
-
+        self.real = self.real
+        self.imaginary = (-1)*self.imaginary
+        #prints conjugated self.imaginary
+    
 class NonZeroComplexNumber(ComplexNumber):
     def __init__(self, real_part, imaginary_part):
         """
